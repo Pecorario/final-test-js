@@ -1,0 +1,451 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+input {
+  border: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background: #F7F7F7;
+}
+/* LOGIN */
+
+.container {
+  height: calc(100vh - 79.5px);
+  display: flex;
+  justify-content: center;
+
+  margin: 0 10%;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-right: 300px;
+}
+
+.description h2 {
+  text-align: center;
+  color: #707070;
+  font-style: italic;
+  font-size: 65px;
+}
+
+.description h1 {
+  font-size: 83px;
+  font-style: italic;
+  text-align: center;
+  color: #707070;
+}
+
+.description span {
+  background: #B5C401;
+  height: 39px;
+  width: 144px;
+  border-radius: 100px;
+
+  margin: 30px 0 20px 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 22px;
+  font-weight: bold;
+  font-style: italic;
+  color: #FFF;
+}
+
+.forms {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.forms h3 {
+  color: #707070;
+  font-size: 35px;
+  font-style: italic;
+  margin-bottom: 26px;
+}
+
+.login-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.forms form {
+  background: #FFF;
+  box-shadow: 0px 3px 25px #00000014;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  
+  width: 352px;
+  height: 337px;
+  border: 1px solid #DDDDDD;
+  border-radius: 14px;
+}
+
+.forms form input:first-child {
+  border-radius: 14px 14px 0 0;
+}
+
+.forms form input {
+  height: 80px;
+  width: 100%;
+  border-bottom: 2px solid #EBEBEB;
+  padding: 0 30px;
+
+  font-size: 17px;
+}
+
+.forms form input::placeholder {
+  font-size: 17px;
+  font-weight: bold;
+  font-style: italic;
+  color: #9D9D9D;
+}
+
+.forms form a {
+  margin: 26.5px 27px 0 0;
+
+  color: #C1C1C1;
+  text-align: right;
+  font-size: 17px;
+  font-style: italic;
+}
+
+.forms form button {
+  color: #B5C401;
+  font-size: 35px;
+  font-weight: bold;
+  font-style: italic;
+  margin-bottom: 43px;
+
+  display: flex;
+  align-items: center;
+}
+
+.forms form button span {
+  margin-left: 19px;
+}
+
+.button-bottom {
+  margin-top: 30px;
+  color: #707070;
+  font-size: 35px;
+  font-weight: bold;
+  font-style: italic;
+
+  display: flex;
+  align-items: center;
+}
+
+.button-bottom span {
+  margin-left: 19px;
+}
+
+footer {
+  height: 79.5px;
+  border-top: 2px solid #EBEBEB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+footer p {
+  font-size: 15px;
+  color: #707070;
+}
+
+/* [data-js="login"] {
+  display: none;
+} */
+
+/* RESET PASSWORD */
+[data-js="reset-password"] {
+  display: none;
+}
+
+[data-js="reset-password"] form {
+  height:  194px;
+}
+
+[data-js="reset-password"] .button-submit-forms {
+  height: calc(100% - 80px);
+  display: flex;
+}
+
+[data-js="reset-password"] form button {
+  margin: 0;
+}
+
+[data-js="reset-password"] .button-bottom span {
+  margin-right: 16px;
+}
+
+/* REGISTRATION */
+[data-js="registration"] {
+  display: none;
+}
+
+[data-js="registration"] form {
+  height:  337px;
+}
+
+[data-js="registration"] .button-submit-forms {
+  height: calc(100% - 240px);
+  display: flex;
+}
+
+[data-js="registration"] form button {
+  margin: 0;
+}
+
+[data-js="registration"] .button-bottom span {
+  margin-right: 16px;
+}
+
+/* HOME */
+header {
+  height: 79.5px;
+  border-bottom: 2px solid #EBEBEB;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  margin-left: 141px;
+  font-size: 44px;
+  font-style: italic;
+  color: #707070;
+}
+
+header h1:after {
+  content: '';
+  width: 107px;
+  height: 7px;
+  background: #B5C401;
+  border-radius: 6px;
+
+  position: absolute;
+  top: 74.5px;
+  left: 130px;
+}
+
+header .session {
+  margin-right: 199px;
+  display: flex;
+  align-items: center;
+}
+
+header .session button,
+header .session span {
+  color: #707070;
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+header .session button {
+  margin-left: 57px; 
+  display: flex;
+  align-items: center;
+}
+
+header .session button span {
+  margin-left: 20px; 
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+
+  height: calc(100vh - 159px);
+  padding: 70.5px 195px 50px 130px;
+}
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  height: fit-content;
+}
+
+.filter-bar h2 {
+  font-size: 24px;
+  font-style: italic;
+  color: #707070;
+  margin-right: 45px;
+}
+
+.filter-bar p {
+  font-size: 17px;
+  font-style: italic;
+  color: #868686;
+  margin-right: 15px;
+}
+
+.filter-bar button + button {
+  margin-left: 25px;
+}
+
+.filter-bar button {
+  width: 113px;
+  height: 34px;
+  border-radius: 100px;
+  border-width: 2px;
+  border-style: solid;
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.lotofacil {
+  border-color: #7F3992;
+  color: #7F3992;
+}
+
+.lotofacil:hover {
+  background: #7F3992;
+  color: #FFF;
+}
+
+.megasena {
+  border-color: #01AC66;
+  color: #FFF;
+  background: #01AC66
+}
+
+.megasena:hover {
+  color: #01AC66;
+  background: #FFF
+}
+
+.lotomania {
+  border-color: #F79C31;
+  color: #F79C31;
+}
+
+.lotomania:hover {
+  background: #F79C31;
+  color: #FFF;
+}
+
+.content [data-js="new-bet"] button {
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+  color: #B5C401;
+
+  display: flex;
+  align-items: center;
+}
+
+.content [data-js="new-bet"] button span {
+  margin-left: 11px;
+}
+
+.games .mark-lotofacil:before {
+  content: '';
+  width: 6px;
+  height: 94px;
+  background: #7F3992;
+  border-radius: 100px;
+
+  position: absolute;
+  top: 0;
+  left: -15px;
+}
+
+.games .mark-megasena:before {
+  content: '';
+  width: 6px;
+  height: 94px;
+  background: #01AC66;
+  border-radius: 100px;
+
+  position: absolute;
+  top: 0;
+  left: -15px;
+}
+
+.games .mark-lotomania:before {
+  content: '';
+  width: 6px;
+  height: 94px;
+  background: #F79C31;
+  border-radius: 100px;
+
+  position: absolute;
+  top: 0;
+  left: -15px;
+}
+
+.games .games-card {
+  position: relative;
+  height: 94px;
+  margin: 30px 0 0 15px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.games .games-card .card-numbers {
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+  color: #868686;
+  margin-bottom: 15px;
+} 
+
+.games .games-card .card-date {
+  font-size: 17px;
+  color: #868686;
+  margin-bottom: 11px;
+} 
+
+.games .games-card .card-name {
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+} 
+
+.games .mark-lotofacil .card-name {
+  color: #7F3992;
+}
+
+.games .mark-megasena .card-name {
+  color: #01AC66;
+}
+
+.games .mark-lotomania .card-name {
+  color: #F79C31;
+}
