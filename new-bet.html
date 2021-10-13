@@ -10,6 +10,9 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="container">
+
+  
   <header>
     <div class="info-header">
       <h1>TGL</h1>
@@ -29,77 +32,27 @@
   <div class="content">
     <div class="new-bet">
       <h2>
-        <strong>NEW BET</strong> FOR <span>MEGA-SENA</span>
+        <strong>NEW BET </strong><span data-js="game-name"></span>
       </h2>
       <p>Choose a game</p>
 
-      <div class="games-type">
-        <button class="lotofacil">Lotofácil</button>
-        <button class="megasena" >Mega-Sena</button>
-        <button class="lotomania" >Lotomania</button>
+      <div data-js="games-type">
       </div>
 
       <p>Fill your bet</p>
-      <span>Mark as many numbers as you want up to a maximum of 50. Win by hitting 15, 16, 17, 18, 19, 20 or none of the 20 numbers drawn.</span>
+      <span data-js="game-description"></span>
 
-      <div class="bet-items">
-        <button class="bet-item">01</button>
-        <button class="bet-item">02</button>
-        <button class="bet-item">03</button>
-
-        <button class="bet-item">04</button>
-        <button class="bet-item">05</button>
-        <button class="bet-item">06</button>
-
-        <button class="bet-item">07</button>
-        <button class="bet-item">08</button>
-        <button class="bet-item">09</button>
-
-        <button class="bet-item">10</button>
-        <button class="bet-item">11</button>
-        <button class="bet-item">12</button>
-
-        <button class="bet-item">13</button>
-        <button class="bet-item">14</button>
-        <button class="bet-item">15</button>
-
-        <button class="bet-item">16</button>
-        <button class="bet-item">17</button>
-        <button class="bet-item">18</button>
-
-        <button class="bet-item">19</button>
-        <button class="bet-item">20</button>
-        <button class="bet-item">21</button>
-
-        <button class="bet-item">22</button>
-        <button class="bet-item">23</button>
-        <button class="bet-item">24</button>
-
-        <button class="bet-item">25</button>
-        <button class="bet-item">26</button>
-        <button class="bet-item">27</button>
-
-        <button class="bet-item">28</button>
-        <button class="bet-item">29</button>
-        <button class="bet-item">30</button>
-
-        <button class="bet-item">31</button>
-        <button class="bet-item">32</button>
-        <button class="bet-item">33</button>
-
-        <button class="bet-item">34</button>
-        <button class="bet-item">35</button>
-        <button class="bet-item">36</button>
+      <div data-js="bet-items">
       </div>
 
       <div class="bet-buttons">
         <div class="buttons-game">
           <button>Complete game</button>
-          <button>Clear game</button>
+          <button data-js="button-clear-game">Clear game</button>
         </div>
 
         <div class="button-add">
-          <button>
+          <button data-js="button-add">
             <span style="font-size: 20px">
               <i class="fas fa-shopping-cart"></i>
             </span>
@@ -149,7 +102,9 @@
   <footer>
     <p>Copyright 2020 Luby Software</p>
   </footer>
+</div>
 
+  <script src="dom.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
