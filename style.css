@@ -304,7 +304,7 @@ header .session button span {
   left: -15px;
 }
 
-.mark-lotomania:before {
+.mark-quina:before {
   content: '';
   width: 4px;
   height: 86px;
@@ -342,7 +342,7 @@ header .session button span {
   color: #01AC66;
 }
 
-.mark-lotomania .bet-name span {
+.mark-quina .bet-name span {
   color: #F79C31;
 }
 

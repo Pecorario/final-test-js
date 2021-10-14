@@ -4,7 +4,7 @@
   var app = (function() {
     var typesGame = [];
     var games = [];
-    var game = {}
+    var game = {};
 
     return {
       init: function init() {
@@ -38,15 +38,30 @@
           game.numbers.push(randomNumber);
         }
 
+        app.findGameOnArray(game.name);
+
+        app.paintingAllNumberButtons(app.getColorGame());
+        console.log('Array sortido: ', game.numbers);
+      },
+
+      findGameOnArray: function findGameOnArray(name) {
         typesGame.map((item) => {
-          if(item.name === game.name) {
-            item.selected = true;
+          if(item.name === name) {
+            return item.selected = true;
           } else {
-            item.selected = false;
+            return item.selected = false;
           }
         })
-        
-        app.selectNumber();
+      },
+
+      getColorGame: function getColorGame() {
+        var color;
+        typesGame.map((item) => {
+          if(item.selected) {
+            color = item.color;
+          }
+        })
+        return color;
       },
 
       gamesInfo: function gamesInfo() {
@@ -94,24 +109,21 @@
         $game1.textContent = typesGame[0].name;
         $game1.addEventListener('click', this.createNumbers, false);
         $game1.setAttribute('data-js', 'button-game1');
-        this.createGamesStyle($game1, typesGame[0]);
 
         $game2.textContent = typesGame[1].name;
         $game2.addEventListener('click', this.createNumbers, false);
         $game2.setAttribute('data-js', 'button-game2');
-        this.createGamesStyle($game2, typesGame[1]);
-        
 
         $game3.textContent = typesGame[2].name;
         $game3.addEventListener('click', this.createNumbers, false);
         $game3.setAttribute('data-js', 'button-game3');
-        this.createGamesStyle($game3, typesGame[2]);
 
         $fragment.appendChild($game1);
         $fragment.appendChild($game2);
         $fragment.appendChild($game3);
 
         $gamesType.appendChild($fragment);
+        app.gamesStyleDefault();
       },
 
       createNumbers: function createNumbers() {
@@ -122,24 +134,24 @@
         var size, description, price, maxNumber;
 
         app.createGamesStyleWhenSelected(this.getAttribute('data-js'));
+        app.findGameOnArray(name);
         
         typesGame.map((item) => {
           if(item.name === name) {
-            price = item.price;
-            size = item.range;
             description = item.description;
+            size = item.range;
+            price = item.price;
             maxNumber = item.maxNumber;
-            item.selected = true;
-          } else {
-            item.selected = false;
           }
         })
 
-        game.name = name;
-        game.numbers = [];
-        game.size = size;
-        game.price = price;
-        game.maxNumber = maxNumber;
+        game = {
+          name: name,
+          numbers: [],
+          size: size,
+          price: price,
+          maxNumber: maxNumber
+        };
 
         console.log('game: ', game);
 
@@ -165,41 +177,66 @@
       },
 
       selectNumber: function selectNumber() {
-        var color;
+        if(app.isThisNumberAlreadyOnArray(this.textContent)) {
+          app.paintingNumberButton(this, '#ADC0C4');
+          game.numbers.splice(game.numbers.indexOf(this.textContent), 1);
+          return;
+        } 
         
-        typesGame.map((item) => {
-          if(item.selected) {
-            color = item.color;
-          }
-        })
-
-
-        if(game.numbers.length !== (game.maxNumber)) {
+        else if (!app.isThisGameAlreadyFullOnArray() && !app.isThisNumberAlreadyOnArray(this.textContent)) {
+          console.log('Dei um push');
           game.numbers.push(this.textContent);
+        } 
+        
+        else {
+          alert('Você já escolheu a quantidade máxima de números. Limpe o jogo ou adicione ao carrinho.')
         }
 
-        game.numbers.map((number) => {
-          $('[data-js="bet-item"]').map((item) => {
-            if(+number === +item.textContent) {
-              item.style.backgroundColor = color;
-            }
-          })
-        });
-
-        console.log('numbers selected', game);
+        app.paintingAllNumberButtons(app.getColorGame());
       },
 
-      clearGame: function clearGame() {
+      isThisNumberAlreadyOnArray: function isThisNumberAlreadyOnArray(number) {
+        var repeated = false;
+        game.numbers.map((num) => {
+          if(+num === +number) {
+            repeated = true;
+          }
+        })
+        return repeated;
+      },
+
+      isThisGameAlreadyFullOnArray: function isThisGameAlreadyFullOnArray() {
+        return game.numbers.length === game.maxNumber;
+      },
+
+      paintingNumberButton: function paintingNumberButton(button, color) {
+        return button.style.backgroundColor = color;
+      },
+
+      paintingAllNumberButtons: function paintingAllNumberButtons(color) {
         game.numbers.map((number) => {
           $('[data-js="bet-item"]').map((item) => {
             if(+number === +item.textContent) {
-              item.style.backgroundColor = '#ADC0C4';
+              app.paintingNumberButton(item, color);
             } 
           })
         });
-        
+      },
+
+      clearGame: function clearGame() {
+        app.paintingAllNumberButtons('#ADC0C4');
         game.numbers = [];
         console.log('limpar o jogo', game);
+      },
+
+      gamesStyleDefault: function gamesStyleDefault() {
+        var $game1 = $('[data-js="button-game1"]').get();
+        var $game2 = $('[data-js="button-game2"]').get();
+        var $game3 = $('[data-js="button-game3"]').get();
+
+        app.createGamesStyle($game1, typesGame[0]);
+        app.createGamesStyle($game2, typesGame[1]);
+        app.createGamesStyle($game3, typesGame[2]);
       },
 
       createGamesStyle: function createGamesStyle(buttonName, arr) {
@@ -209,13 +246,7 @@
       },
 
       createGamesStyleWhenSelected: function createGamesStyleWhenSelected(buttonName) {
-        var $game1 = $('[data-js="button-game1"]').get();
-        var $game2 = $('[data-js="button-game2"]').get();
-        var $game3 = $('[data-js="button-game3"]').get();
-
-        this.createGamesStyle($game1, typesGame[0]);
-        this.createGamesStyle($game2, typesGame[1]);
-        this.createGamesStyle($game3, typesGame[2]);
+        app.gamesStyleDefault();
 
         var $buttonSelected = $(`[data-js=${buttonName}]`).get();
         var name = $buttonSelected.innerText;
