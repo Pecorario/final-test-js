@@ -15,13 +15,38 @@
       initEvents() {
         $('[data-js="button-add"]').on('click', this.handleSubmit);
         $('[data-js="button-clear-game"]').on('click', this.clearGame);
+        $('[data-js="button-complete-game"]').on('click', this.completeGame);
       },
 
       handleSubmit: function handleSubmit(e) {
         e.preventDefault();
-        games.push(game);
+        games.push(game); // ta enviando duplicado e sobrescrevendo o antigo
         console.log('Novo jogo adicionado: ', games);
+        // app.clearGame(); ta limpando antes de dar o push no games
+      },
+
+      completeGame: function completeGame() {
         app.clearGame();
+
+        for(var i = 0; i < game.maxNumber;i++) {
+          var randomNumber = Math.round(Math.random() * (game.size - 1) + 1);
+
+          while(game.numbers.includes(randomNumber)) {
+            randomNumber = Math.round(Math.random() * (game.size - 1) + 1);
+          }
+
+          game.numbers.push(randomNumber);
+        }
+
+        typesGame.map((item) => {
+          if(item.name === game.name) {
+            item.selected = true;
+          } else {
+            item.selected = false;
+          }
+        })
+        
+        app.selectNumber();
       },
 
       gamesInfo: function gamesInfo() {
@@ -46,7 +71,7 @@
             price: item.price,
             maxNumber: item["max-number"],
             color: item.color,
-            active: false,
+            selected: false,
           });
         })
 
@@ -114,6 +139,9 @@
         game.numbers = [];
         game.size = size;
         game.price = price;
+        game.maxNumber = maxNumber;
+
+        console.log('game: ', game);
 
         $gameName.textContent = `FOR ${name.toUpperCase()}`;
         $gameDescription.textContent = description;
@@ -137,23 +165,34 @@
       },
 
       selectNumber: function selectNumber() {
-        console.log('cheguei no select number');
         var color;
-
+        
         typesGame.map((item) => {
           if(item.selected) {
             color = item.color;
           }
         })
 
-        game.numbers.push(this.textContent);
-        this.style.backgroundColor = color;
+
+        if(game.numbers.length !== (game.maxNumber)) {
+          game.numbers.push(this.textContent);
+        }
+
+        game.numbers.map((number) => {
+          $('[data-js="bet-item"]').map((item) => {
+            if(+number === +item.textContent) {
+              item.style.backgroundColor = color;
+            }
+          })
+        });
+
+        console.log('numbers selected', game);
       },
 
       clearGame: function clearGame() {
         game.numbers.map((number) => {
           $('[data-js="bet-item"]').map((item) => {
-            if(number === item.textContent) {
+            if(+number === +item.textContent) {
               item.style.backgroundColor = '#ADC0C4';
             } 
           })
