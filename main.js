@@ -20,9 +20,81 @@
 
       handleSubmit: function handleSubmit(e) {
         e.preventDefault();
-        games.push(game); // ta enviando duplicado e sobrescrevendo o antigo
+        app.addGameToCart();
+      },
+
+      addGameToCart: function addGameToCart() {
+        games.push(game);
         console.log('Novo jogo adicionado: ', games);
-        // app.clearGame(); ta limpando antes de dar o push no games
+        // app.clearGame(); //ta limpando antes de dar o push no games
+
+        app.createGameOnCart();
+      },
+
+      createGameOnCart: function createGameOnCart() {
+        var $cart = $('[data-js="cart-items"]').get();
+
+        const $fragment = doc.createDocumentFragment();
+        var $bet = doc.createElement('div');
+        var $buttonDelete = doc.createElement('button');
+        var $spanIcon = doc.createElement('span');
+        var $icon = doc.createElement('i');
+        var $div = doc.createElement('div');
+        var $pNumbers = doc.createElement('p');
+        var $pName = doc.createElement('p');
+        var $spanPrice = doc.createElement('span');
+
+        $spanIcon.style.fontSize = '23px';
+        $bet.setAttribute('class', 'bet');
+        $icon.setAttribute('class', 'far fa-trash-alt');
+        $pNumbers.setAttribute('class', 'bet-numbers');
+        $pName.setAttribute('class', 'bet-name');
+      
+        switch (game.name) {
+          case 'Lotofácil': 
+          $div.setAttribute('class', 'bet-info mark-lotofacil');
+          break;
+          case 'Mega-Sena': 
+          $div.setAttribute('class', 'bet-info mark-megasena');
+          break;
+          case 'Quina': 
+          $div.setAttribute('class', 'bet-info mark-quina');
+          break;
+        }
+
+        var formatNumbersArray = game.numbers.toString().replace(/,/g, ', ');
+        var formatPrice = game.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+       
+        $pNumbers.textContent = formatNumbersArray;
+        $spanPrice.textContent = `${formatPrice}`;
+        $pName.textContent = game.name;
+
+        $spanIcon.appendChild($icon);
+        $buttonDelete.appendChild($spanIcon);
+        $buttonDelete.addEventListener('click', this.removeItemOnCart, false);
+
+        $pName.appendChild($spanPrice);
+        $div.appendChild($pNumbers);
+        $div.appendChild($pName);
+
+        $bet.appendChild($buttonDelete);
+        $bet.appendChild($div);
+
+        $fragment.appendChild($bet);
+        $cart.appendChild($fragment);
+
+        app.totalPrice();  
+      },
+
+      totalPrice: function totalPrice() {
+        var $spanTotalPrice = $('[data-js="span-price-total"]').get();
+
+        var result = games.reduce(function(total, item) { 
+          return total + item.price;
+        }, 0)
+
+        var formatResult = result.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        return $spanTotalPrice.textContent = formatResult;
       },
 
       completeGame: function completeGame() {
@@ -39,9 +111,7 @@
         }
 
         app.findGameOnArray(game.name);
-
         app.paintingAllNumberButtons(app.getColorGame());
-        console.log('Array sortido: ', game.numbers);
       },
 
       findGameOnArray: function findGameOnArray(name) {
@@ -52,6 +122,17 @@
             return item.selected = false;
           }
         })
+      },
+
+      setGameSelected: function setGameSelected() {
+        var gameSelected;
+        typesGame.map((item) => {
+          if(item.selected === true) {
+            return gameSelected = item;
+          }
+        })
+
+        return gameSelected;
       },
 
       getColorGame: function getColorGame() {
@@ -97,11 +178,20 @@
         return this.readyState === 4 && this.status === 200;
       },
 
+      removeItemOnCart: function removeItemOnCart() {
+        var child = this.parentNode;
+        var parent = this.parentNode.parentNode;
+        var index = Array.prototype.indexOf.call(parent.children, child);
+
+        games.splice(index, 1);
+        app.totalPrice();
+        return this.parentNode.remove();
+      },
+
       createButtonsGames: function createButtonsGames() {
         var $gamesType = $('[data-js="games-type"]').get();
         const $fragment = doc.createDocumentFragment();
 
-        // dá pra fazer isso de forma dinâmica?
         var $game1 = doc.createElement('button');
         var $game2 = doc.createElement('button');
         var $game3 = doc.createElement('button');
@@ -128,52 +218,40 @@
 
       createNumbers: function createNumbers() {
         var $gameName = $('[data-js="game-name"]').get();
-        var $gameDescription = $('[data-js="game-description"]').get();
-
+        var $gameDescription = $('[data-js="game-description"]').get(); 
+        var $betItems = $('[data-js="bet-items"]').get();
+        const $fragment = doc.createDocumentFragment();
         var name = this.innerText;
-        var size, description, price, maxNumber;
 
+        $betItems.innerText = '';
         app.createGamesStyleWhenSelected(this.getAttribute('data-js'));
         app.findGameOnArray(name);
-        
-        typesGame.map((item) => {
-          if(item.name === name) {
-            description = item.description;
-            size = item.range;
-            price = item.price;
-            maxNumber = item.maxNumber;
-          }
-        })
-
-        game = {
-          name: name,
-          numbers: [],
-          size: size,
-          price: price,
-          maxNumber: maxNumber
-        };
-
-        console.log('game: ', game);
+        app.createGameObject();
 
         $gameName.textContent = `FOR ${name.toUpperCase()}`;
-        $gameDescription.textContent = description;
+        $gameDescription.textContent = app.setGameSelected().description;
 
-        var $betItems = $('[data-js="bet-items"]').get();
-        $betItems.innerText = '';
-        const $fragment = doc.createDocumentFragment();
-
-        for(var i = 0;i < size;i++) {
+        for(var i = 0;i < game.size;i++) {
           var $number = doc.createElement('button');
           $number.setAttribute('class', 'bet-item');
           $number.setAttribute('data-js', 'bet-item');
-
           $number.textContent = i + 1;
-
           $number.addEventListener('click', app.selectNumber, false);
+
           $fragment.appendChild($number);
         }
 
         $betItems.appendChild($fragment);
+      },
+
+      createGameObject: function createGameObject() {
+        game = {
+          name: app.setGameSelected().name,
+          numbers: [],
+          size: app.setGameSelected().range,
+          price: app.setGameSelected().price,
+          maxNumber: app.setGameSelected().maxNumber
+        }
       },
 
       selectNumber: function selectNumber() {
@@ -184,7 +262,6 @@
         } 
         
         else if (!app.isThisGameAlreadyFullOnArray() && !app.isThisNumberAlreadyOnArray(this.textContent)) {
-          console.log('Dei um push');
           game.numbers.push(this.textContent);
         } 
         
@@ -226,7 +303,6 @@
       clearGame: function clearGame() {
         app.paintingAllNumberButtons('#ADC0C4');
         game.numbers = [];
-        console.log('limpar o jogo', game);
       },
 
       gamesStyleDefault: function gamesStyleDefault() {

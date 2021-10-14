@@ -228,7 +228,7 @@ header .session button span {
 }
 
 .button-add button:hover {
-  background: #FFF;
+  background: #F7F7F7;
   border: 1px solid #27C383;
 
   color: #27C383;
@@ -259,7 +259,7 @@ header .session button span {
   color: #707070;
 }
 
-.cart-items {
+[data-js="cart-items"] {
   margin-left: 19px;
 }
 
@@ -326,23 +326,26 @@ header .session button span {
 
 .bet-name {
   font-size: 16px;
-  color: #868686;
-}
-
-.bet-name span {
   font-weight: bold;
   font-style: italic;
 }
 
-.mark-lotofacil .bet-name span {
+.bet-name span {
+  font-weight: normal;
+  color: #868686;
+  margin-left: 10px;
+  /* font-style: italic; */
+}
+
+.mark-lotofacil .bet-name {
   color: #7F3992;
 }
 
-.mark-megasena .bet-name span {
+.mark-megasena .bet-name {
   color: #01AC66;
 }
 
-.mark-quina .bet-name span {
+.mark-quina .bet-name {
   color: #F79C31;
 }
 
