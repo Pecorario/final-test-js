@@ -24,11 +24,17 @@
       },
 
       addGameToCart: function addGameToCart() {
-        games.push(game);
-        console.log('Novo jogo adicionado: ', games);
-        // app.clearGame(); //ta limpando antes de dar o push no games
-
-        app.createGameOnCart();
+        if (app.setGameSelected() === undefined) {
+          return alert('Escolha um jogo!');
+        } 
+        else if (app.isThisGameAlreadyFullOnArray()) {
+          games.push(game);
+          app.createGameOnCart();
+        }
+        else {
+          var missing = game.maxNumber - game.numbers.length;
+          return alert(`Está faltando ${missing} números para escolher!`);
+        }
       },
 
       createGameOnCart: function createGameOnCart() {
@@ -84,6 +90,7 @@
         $cart.appendChild($fragment);
 
         app.totalPrice();  
+        app.clearGame();
       },
 
       totalPrice: function totalPrice() {
@@ -98,8 +105,12 @@
       },
 
       completeGame: function completeGame() {
-        app.clearGame();
+        if (app.setGameSelected() === undefined) {
+          return alert('Escolha um jogo!');
+        }
 
+        app.clearGame();
+        
         for(var i = 0; i < game.maxNumber;i++) {
           var randomNumber = Math.round(Math.random() * (game.size - 1) + 1);
 
@@ -256,8 +267,9 @@
 
       selectNumber: function selectNumber() {
         if(app.isThisNumberAlreadyOnArray(this.textContent)) {
+          var index = game.numbers.indexOf(+this.textContent);
           app.paintingNumberButton(this, '#ADC0C4');
-          game.numbers.splice(game.numbers.indexOf(this.textContent), 1);
+          game.numbers.splice(index, 1);
           return;
         } 
         
@@ -301,6 +313,9 @@
       },
 
       clearGame: function clearGame() {
+        if (app.setGameSelected() === undefined) {
+          return alert('Escolha um jogo!');
+        } 
         app.paintingAllNumberButtons('#ADC0C4');
         game.numbers = [];
       },
