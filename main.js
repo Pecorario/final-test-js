@@ -110,7 +110,7 @@
         }
 
         app.clearGame();
-        
+
         for(var i = 0; i < game.maxNumber;i++) {
           var randomNumber = Math.round(Math.random() * (game.size - 1) + 1);
 
@@ -118,7 +118,7 @@
             randomNumber = Math.round(Math.random() * (game.size - 1) + 1);
           }
 
-          game.numbers.push(randomNumber);
+          game.numbers.push(+randomNumber);
         }
 
         app.findGameOnArray(game.name);
@@ -266,15 +266,16 @@
       },
 
       selectNumber: function selectNumber() {
-        if(app.isThisNumberAlreadyOnArray(this.textContent)) {
+        if(app.isThisNumberAlreadyOnArray(+this.textContent)) {
           var index = game.numbers.indexOf(+this.textContent);
-          app.paintingNumberButton(this, '#ADC0C4');
           game.numbers.splice(index, 1);
+          app.paintingNumberButton(this, '#ADC0C4');
+          console.log(index);
           return;
         } 
         
         else if (!app.isThisGameAlreadyFullOnArray() && !app.isThisNumberAlreadyOnArray(this.textContent)) {
-          game.numbers.push(this.textContent);
+          game.numbers.push(+this.textContent);
         } 
         
         else {
