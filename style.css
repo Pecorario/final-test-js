@@ -280,35 +280,10 @@ header .session button span {
   justify-content: center;
 }
 
-.mark-lotofacil:before {
-  content: '';
+.mark {
   width: 4px;
   height: 86px;
-  background: #7F3992;
-  border-radius: 100px 0 0 100px;
-
-  position: absolute;
-  top: 0;
-  left: -15px;
-}
-
-.mark-megasena:before {
-  content: '';
-  width: 4px;
-  height: 86px;
-  background: #01AC66;
-  border-radius: 100px 0 0 100px;
-
-  position: absolute;
-  top: 0;
-  left: -15px;
-}
-
-.mark-quina:before {
-  content: '';
-  width: 4px;
-  height: 86px;
-  background: #F79C31;
+  background-color: red;
   border-radius: 100px 0 0 100px;
 
   position: absolute;
@@ -349,6 +324,10 @@ header .session button span {
   color: #F79C31;
 }
 
+[data-js="cart-items"] {
+  max-height: 354px;
+  overflow-y: auto;
+}
 
 .cart h3 {
   margin: 8px 0 47px 19px; 
@@ -360,6 +339,13 @@ header .session button span {
 
 .cart h3 strong {
   font-style: italic;
+}
+
+.cart .empty-cart {
+  color: red;
+  font-style: italic;
+  display: inline-block;
+  margin-bottom: 25px;
 }
 
 .button-save {
